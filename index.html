@@ -14,10 +14,24 @@
 
       </hero>
       <main>
-          <div class="search-container"></div>
+          <h2>Let's Plan</h2>
+          <div class="search-container">
+          <div class="row">
+          <label for="name">Your Destination</label>
           <input type="name" id="destination">
+          <label for="numbers">Your Budget</label>
           <input type="number" id="budget">
+          <label for="name">Your Currency</label>
+          <select class="form-control" id="usercurrency">
+            <option>USD</option>
+            <option>EU</option>
+            <option>AUD</option>
+            <option>ALL</option>
+            <option>JPY</option>
+          <label for="date">Arrival Date</label>
           <input type="date" id="arrivalDate">
+            </div>
+        </div>
           <div class="results-container"></div>
       </main>
     <script src="script.js"></script>
