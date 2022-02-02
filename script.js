@@ -11,19 +11,23 @@ request.onload = function() {
   console.log(response);
 }
 //Variables
-
+var requestUrl = 'https://api.exchangerate.host/convert?from=EUR&to=USD';
+fetch(requestUrl)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    //console.log('Github Repo Issues \n----------');
+    console.log(data);
+    }
+  );
 
 //When user submits their search parameters==Call API Convertor Endpoint 
 //Remember this exchange rate is based on the EURO
-$('#search-btn').click(function(){
+/* $('#search-btn').click(function(){
 
 
 function currencyConvertor() {
-  var convURL = 'https://api.exchangerate.host/convert?from=EUR&to=USD';
-  var conRequest = new XMLHttpRequest();
-  conRequest.open('GET', convURL);
-  conRequest.responseType = 'json';
-  conRequest.send();
   var response = request.response;
   var userDestination = document.getElementById('#destination');
   var userBudget = document.getElementById('#budget');
@@ -32,4 +36,4 @@ function currencyConvertor() {
   console.log(response);
 }
 currencyConvertor();
-})
+}) */
