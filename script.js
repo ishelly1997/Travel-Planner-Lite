@@ -11,7 +11,7 @@ request.onload = function() {
   console.log(response);
 }
 //Variables
-var requestUrl = 'https://api.exchangerate.host/convert?from=EUR&to=USD';
+var requestUrl = 'https://api.exchangerate.host/convert?from=EUR&to=GBP';
 fetch(requestUrl)
   .then(function (response) {
     return response.json();
