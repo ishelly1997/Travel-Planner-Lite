@@ -10,17 +10,6 @@ request.onload = function() {
   var response = request.response;
   console.log(response);
 }
-//Variables
-var requestUrl = 'https://api.exchangerate.host/convert?from=EUR&to=GBP';
-fetch(requestUrl)
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    //console.log('Github Repo Issues \n----------');
-    console.log(data);
-    }
-  );
 
 //When user submits their search parameters==Call API Convertor Endpoint 
 //Remember this exchange rate is based on the EURO
@@ -28,12 +17,7 @@ fetch(requestUrl)
 
 
 function currencyConvertor() {
-  var response = request.response;
-  var userDestination = document.getElementById('#destination');
-  var userBudget = document.getElementById('#budget');
-  var userCurrency = document.getElementById('#user-currency');
-  localStorage.setItem(userDestination,userBudget,userCurrency);
-  console.log(response);
+
 }
 currencyConvertor();
 }) 
@@ -53,6 +37,7 @@ var getCurrentConditions = (event) => {
     .then(handleErrors)
     .then((response) => {
         return response.json();
+        
     })
 
         // Create icon for the current weather using Open Weather Maps
@@ -85,7 +70,22 @@ var getCurrentConditions = (event) => {
         let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
         // API solution for Cross-origin resource sharing (CORS) error: https://cors-anywhere.herokuapp.com/
         uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
-
+        //Variables
+      var response = request.response;
+      var userDestination = document.getElementById('#destination');
+      var userBudget = document.getElementById('#budget');
+      var userCurrency = document.getElementById('#user-currency');
+      localStorage.setItem(userDestination,userBudget,userCurrency);
+      console.log(response);
+      //Call Exchange API endpoint convert
+      var requestUrl = 'https://api.exchangerate.host/convert?from=' + userCurrency + '&to=' + ${response.city.country};
+        fetch(requestUrl)
+          .then(function (response) {
+      return response.json();
+    }).then(function (data) {
+        console.log(data);
+    }
+  );
         });
     })
 }
