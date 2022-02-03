@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Travel Planner Lite</title>
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
   </head>
   <body>
-      <header>
-        <h1>Travel Planner Lite</h1>
-      </header>
+    <section class="sub-header">   
+            
+      <nav class="scroll">
+          <span>Travel Planner Lite</span>
+          <div class="nav-links" id="navLinks">
       <hero>
 
       </hero>
@@ -17,12 +21,14 @@
           <h2>Let's Plan</h2>
           <div class="search-container">
           <div class="row">
-          <label for="name">Your Destination</label>
-          <input type="name" id="destination">
+            <form>
+              <label for="search-city">Enter City Name:</label>
+              <div class="form-row">
+                  <input id="search-city" class="form-control" name="city" value="New York City">
           <label for="numbers">Your Budget</label>
           <input type="number" id="budget">
           <label for="name">Your Currency</label>
-          <select class="form-control" id="user-currency">
+          <select class="form-control" id="usercurrency">
             <option id="ALL">ALL</option>
             <option id="AMD">AMD</option>
             <option id="AZN">AZN</option>
@@ -48,28 +54,33 @@
             <option id="SEK">SEK</option>
             <option id="TRY">TRY</option>
             <option id="UAH">UAH</option>
-
             </select>
           <label for="date">Arrival Date</label>
-          <input type="date" id="arrivalDate"></input>
-            <button type="button" id="search-btn">Let's Go!</button>
+          <input type="date" id="arrivalDate">
+            </div>
         </div>
-        <div id="content" class="container">
-          <div class="row">
-            <span class="final-amount"></span>
+        <button id="search-button" class="btn btn-primary" type="submit">
+          Search
+      </button>
+  </div>
+</form>
+<div id="search-error"></div>
+<ul id="city-results" class="list-group mt-4"></ul>
+<a id="clear-storage" href="#"></a>
+</div>
+
+<div id="content-right" class="col-md-9 pt-4">
+<div id="current-weather" class="border rounded"></div>
+<div id="five-day-forecast" class="mt-5"></div>
+</div>
           </div>
       </main>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- Custom Script -->
     <script src="script.js"></script>
-
-
- 
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <!-- moment.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   </body>

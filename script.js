@@ -13,33 +13,34 @@ request.onload = function() {
 
 //When user submits their search parameters==Call API Convertor Endpoint 
 //Remember this exchange rate is based on the EURO
- $('#search-btn').click(function(){
-
-
-function currencyConvertor() {
-
-}
-currencyConvertor();
-}) 
-
-// Set global vars, including Open Weather Maps API Key
-var owmAPI = "c83f688a772596959b4e8bfb3bbbe2d7";
+var owmAPI = "c28e46e7238eee3fbb25d0a8265238ce";
 var currentCity = "";
+var lastCity = "";
 
-// Function to display the current conditions on Open Weather Maps
+// Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
+var handleErrors = (response) => {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
+
+// Function to get and display the current conditions on Open Weather Maps
 var getCurrentConditions = (event) => {
     // Obtain city name from the search box
     let city = $('#search-city').val();
     currentCity= $('#search-city').val();
-    // Set the queryURL to fetch from API using weather search
-    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&APPID=" + owmAPI;
+    // Set the queryURL to fetch from API using weather search - added units=imperial to fix
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + owmAPI;
     fetch(queryURL)
     .then(handleErrors)
     .then((response) => {
         return response.json();
-        
     })
-
+    .then((response) => {
+        // Save city to local storage
+        saveCity(city);
+        $('#search-error').text("");
         // Create icon for the current weather using Open Weather Maps
         let currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
         // Offset UTC timezone - using moment.js
@@ -52,7 +53,7 @@ var getCurrentConditions = (event) => {
         // Obtain the 5day forecast for the searched city
         getFiveDayForecast(event);
         // Set the header text to the found city name
-        $('#header-text').text(response.name);
+        
         // HTML for the results of search
         let currentWeatherHTML = `
             <h3>${response.name} ${currentMoment.format("(MM/DD/YY)")}<img src="${currentWeatherIcon}"></h3>
@@ -67,35 +68,28 @@ var getCurrentConditions = (event) => {
         // Get the latitude and longitude for the UV search from Open Weather Maps API
         let latitude = response.coord.lat;
         let longitude = response.coord.lon;
-        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&APPID=" + owmAPI;
+        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial" + "&APPID=" + owmAPI;
         // API solution for Cross-origin resource sharing (CORS) error: https://cors-anywhere.herokuapp.com/
         uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
-        //Variables
-      var response = request.response;
-      var userDestination = document.getElementById('#destination');
-      var userBudget = document.getElementById('#budget').value;
-      var userCurrency = document.getElementById('#user-currency').child.value;
-      var destinationCurrency = document.getElementsByClassName('form-control');
-      localStorage.setItem(userDestination,userBudget,userCurrency, destinationCurrency);
-      console.log(response);
-      //Call Exchange API endpoint convert
-      var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${response.country}`;
-        fetch(requestUrl)
-          .then(function (response) {
-      return response.json();
-    }).then(function (data) {
-        //console.log(data);
-        function convert(){
-          var startRate = currency.rates[response]
-
-        }
-        function displayCurrency(currency) {
-
-          //var finalAmount = document.getElementById
-        }
-    }
-  );
-        };
+        // Fetch the UV information and build the color display for the UV index
+        fetch(uvQueryURL)
+        .then(handleErrors)
+        .then((response) => {
+            return response.json();
+        })
+        .then((response) => {
+            let uvIndex = response.value;
+            $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
+            if (uvIndex>=0 && uvIndex<3){
+                $('#uvVal').attr("class", "uv-favorable");
+            } else if (uvIndex>=3 && uvIndex<8){
+                $('#uvVal').attr("class", "uv-moderate");
+            } else if (uvIndex>=8){
+                $('#uvVal').attr("class", "uv-severe");
+            }
+        });
+    })
+}
 
 // Function to obtain the five day forecast and display to HTML
 var getFiveDayForecast = (event) => {
@@ -112,5 +106,118 @@ var getFiveDayForecast = (event) => {
         // HTML template
         let fiveDayForecastHTML = `
         <h2>5-Day Forecast:</h2>
-        <div id="content" class="d-inline-flex flex-wrap ">`
-      })}
+        <div id="fiveDayForecastUl" class="d-inline-flex flex-wrap ">`;
+        // Loop over the 5 day forecast and build the template HTML using UTC offset and Open Weather Map icon
+        for (let i = 0; i < response.list.length; i++) {
+            let dayData = response.list[i];
+            let dayTimeUTC = dayData.dt;
+            let timeZoneOffset = response.city.timezone;
+            let timeZoneOffsetHours = timeZoneOffset / 60 / 60;
+            let thisMoment = moment.unix(dayTimeUTC).utc().utcOffset(timeZoneOffsetHours);
+            let iconURL = "https://openweathermap.org/img/w/" + dayData.weather[0].icon + ".png";
+            // Only displaying mid-day forecasts
+            if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
+                fiveDayForecastHTML += `
+                <div class="weather-card card m-2 p0">
+                    <ul class="list-unstyled p-3">
+                        <li>${thisMoment.format("MM/DD/YY")}</li>
+                        <li class="weather-icon"><img src="${iconURL}"></li>
+                        <li>Temp: ${dayData.main.temp}&#8457;</li>
+                        <br>
+                        <li>Humidity: ${dayData.main.humidity}%</li>
+                    </ul>
+                </div>`;
+            }
+        }
+        // Build the HTML template
+        fiveDayForecastHTML += `</div>`;
+        // Append the five-day forecast to the DOM
+        $('#five-day-forecast').html(fiveDayForecastHTML);
+    })
+}
+
+// Function to save the city to localStorage
+var saveCity = (newCity) => {
+    let cityExists = false;
+    // Check if City exists in local storage
+    for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage["cities" + i] === newCity) {
+            cityExists = true;
+            break;
+        }
+    }
+    // Save to localStorage if city is new
+    if (cityExists === false) {
+        localStorage.setItem('cities' + localStorage.length, newCity);
+    }
+}
+
+// Render the list of searched cities
+var renderCities = () => {
+    $('#city-results').empty();
+    // If localStorage is empty
+    if (localStorage.length===0){
+        if (lastCity){
+            $('#search-city').attr("value", lastCity);
+        } else {
+            $('#search-city').attr("value", "New York City");
+        }
+    } else {
+        // Build key of last city written to localStorage
+        let lastCityKey="cities"+(localStorage.length-1);
+        lastCity=localStorage.getItem(lastCityKey);
+        // Set search input to last city searched
+        $('#search-city').attr("value", lastCity);
+        // Append stored cities to page
+        for (let i = 0; i < localStorage.length; i++) {
+            let city = localStorage.getItem("cities" + i);
+            let cityEl;
+            // Set to lastCity if currentCity not set
+            if (currentCity===""){
+                currentCity=lastCity;
+            }
+            // Set button class to active for currentCity
+            if (city === currentCity) {
+                cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
+            } else {
+                cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
+            } 
+            // Append city to page
+            $('#city-results').prepend(cityEl);
+        }
+        // Add a "clear" button to page if there is a cities list
+        if (localStorage.length>0){
+            $('#clear-storage').html($('<a id="clear-storage" href="#">clear</a>'));
+        } else {
+            $('#clear-storage').html('');
+        }
+    }
+    
+}
+
+// New city search button event listener
+$('#search-button').on("click", (event) => {
+event.preventDefault();
+currentCity = $('#search-city').val();
+getCurrentConditions(event);
+});
+
+// Old searched cities buttons event listener
+$('#city-results').on("click", (event) => {
+    event.preventDefault();
+    $('#search-city').val(event.target.textContent);
+    currentCity=$('#search-city').val();
+    getCurrentConditions(event);
+});
+
+// Clear old searched cities from localStorage event listener
+$("#clear-storage").on("click", (event) => {
+    localStorage.clear();
+    renderCities();
+});
+
+// Render the searched cities
+renderCities();
+
+// Get the current conditions (which also calls the five day forecast)
+getCurrentConditions();
