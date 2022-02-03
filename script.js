@@ -36,6 +36,20 @@ var getCurrentConditions = (event) => {
     .then(handleErrors)
     .then((response) => {
         return response.json();
+                
+        /*Variables
+                var response = request.response;
+                var userDestination = document.getElementById('#destination');
+                var userBudget = document.getElementById('#budget').value;
+                var userCurrency = document.getElementById('#user-currency').child.value;
+                var destinationCurrency = document.getElementsByClassName('form-control');
+                localStorage.setItem(userDestination,userBudget,userCurrency, destinationCurrency);
+                console.log(response);
+                //Call Exchange API endpoint convert
+                var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${response.country}`;
+                  fetch(requestUrl)
+                    .then(function (response) {
+                return response.json();*/
     })
     .then((response) => {
         // Save city to local storage
