@@ -73,22 +73,29 @@ var getCurrentConditions = (event) => {
         //Variables
       var response = request.response;
       var userDestination = document.getElementById('#destination');
-      var userBudget = document.getElementById('#budget');
-      var userCurrency = document.getElementById('#user-currency');
-      localStorage.setItem(userDestination,userBudget,userCurrency);
+      var userBudget = document.getElementById('#budget').value;
+      var userCurrency = document.getElementById('#user-currency').child.value;
+      var destinationCurrency = document.getElementsByClassName('form-control');
+      localStorage.setItem(userDestination,userBudget,userCurrency, destinationCurrency);
       console.log(response);
       //Call Exchange API endpoint convert
-      var requestUrl = 'https://api.exchangerate.host/convert?from=' + userCurrency + '&to=' + ${response.city.country};
+      var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${response.country}`;
         fetch(requestUrl)
           .then(function (response) {
       return response.json();
     }).then(function (data) {
-        console.log(data);
+        //console.log(data);
+        function convert(){
+          var startRate = currency.rates[response]
+
+        }
+        function displayCurrency(currency) {
+
+          //var finalAmount = document.getElementById
+        }
     }
   );
-        });
-    })
-}
+        };
 
 // Function to obtain the five day forecast and display to HTML
 var getFiveDayForecast = (event) => {
@@ -105,4 +112,5 @@ var getFiveDayForecast = (event) => {
         // HTML template
         let fiveDayForecastHTML = `
         <h2>5-Day Forecast:</h2>
-        <div id="content" class="d-inline-flex flex-wrap ">`;
+        <div id="content" class="d-inline-flex flex-wrap ">`
+      })}
