@@ -1,15 +1,3 @@
-//Call to Exchange rate API on load
-var storage = window.localStorage
-var apiURL = 'https://api.exchangerate.host/latest';
-var request = new XMLHttpRequest();
-request.open('GET', apiURL);
-request.responseType = 'json';
-request.send();
-
-request.onload = function() {
-  var response = request.response;
-  console.log(response);
-}
 
 //When user submits their search parameters==Call API Convertor Endpoint 
 //Remember this exchange rate is based on the EURO
@@ -37,24 +25,29 @@ var getCurrentConditions = (event) => {
     .then((response) => {
         return response.json();
                 
-        /*Variables
-                var response = request.response;
-                var userDestination = document.getElementById('#destination');
-                var userBudget = document.getElementById('#budget').value;
-                var userCurrency = document.getElementById('#user-currency').child.value;
-                var destinationCurrency = document.getElementsByClassName('form-control');
-                localStorage.setItem(userDestination,userBudget,userCurrency, destinationCurrency);
-                console.log(response);
-                //Call Exchange API endpoint convert
-                var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${response.country}`;
-                  fetch(requestUrl)
-                    .then(function (response) {
-                return response.json();*/
     })
     .then((response) => {
-        // Save city to local storage
+            //Variables
+            var userDestination = document.getElementById('destination');
+            var userBudget = document.getElementById('budget').value;
+            var userCurrency = document.getElementById('user-currency').value;
+            localStorage.setItem(userDestination,userBudget,userCurrency,);
+            console.log(response);
+            //Call Exchange API endpoint convert
+            var countryCode = response.sys.country
+            
+            var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${countryCode}`;
+              fetch(requestUrl)
+                .then(function (response) {
+            return response.json(); 
+                })
+                .then(response => {
+
+                }
+      // Save city to local storage
         saveCity(city);
         $('#search-error').text("");
+        console.log(response);
         // Create icon for the current weather using Open Weather Maps
         let currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
         // Offset UTC timezone - using moment.js
