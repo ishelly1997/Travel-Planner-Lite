@@ -92,10 +92,10 @@ var getCurrentConditions = (event) => {
                     return response.json();
                 })
                 .then((response) => {
-                    var conversionResult = response.result;
+                    var conversionResult = Math.round(response.result)
                     console.log(conversionResult);
                     var conversionHTML = 
-                    `<h4>You'll have ${conversionResult} in ${destinationCurrency} for your trip to ${city}</h4>`
+                    `<h4>You'll have ${conversionResult} ${destinationCurrency} for your trip to ${city}</h4>`
                     $('#budget-conversion').html(conversionHTML);
                 }
             )
@@ -124,33 +124,9 @@ var getCurrentConditions = (event) => {
                 <li>Temperature: ${response.main.temp}&#8457;</li>
                 <li>Humidity: ${response.main.humidity}%</li>
                 <li>Wind Speed: ${response.wind.speed} mph</li>
-                <li id="uvIndex">UV Index:</li>
             </ul>`;
         // Append the results to the DOM
         $('#current-weather').html(currentWeatherHTML);
-        // Get the latitude and longitude for the UV search from Open Weather Maps API
-        let latitude = response.coord.lat;
-        let longitude = response.coord.lon;
-        let uvQueryURL = "api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&units=imperial" + "&APPID=" + owmAPI;
-        // API solution for Cross-origin resource sharing (CORS) error: https://cors-anywhere.herokuapp.com/
-        uvQueryURL = "https://cors-anywhere.herokuapp.com/" + uvQueryURL;
-        // Fetch the UV information and build the color display for the UV index
-        fetch(uvQueryURL)
-        .then(handleErrors)
-        .then((response) => {
-            return response.json();
-        })
-        .then((response) => {
-            let uvIndex = response.value;
-            $('#uvIndex').html(`UV Index: <span id="uvVal"> ${uvIndex}</span>`);
-            if (uvIndex>=0 && uvIndex<3){
-                $('#uvVal').attr("class", "uv-favorable");
-            } else if (uvIndex>=3 && uvIndex<8){
-                $('#uvVal').attr("class", "uv-moderate");
-            } else if (uvIndex>=8){
-                $('#uvVal').attr("class", "uv-severe");
-            }
-        });
     })
 }
 
