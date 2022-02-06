@@ -1,4 +1,3 @@
-
 //When user submits their search parameters==Call API Convertor Endpoint 
 //Remember this exchange rate is based on the EURO
 var owmAPI = "c28e46e7238eee3fbb25d0a8265238ce";
@@ -28,8 +27,6 @@ var getCurrentConditions = (event) => {
     })
     .then((response) => {
             //Variables
-            //array of all country codes that use the EURO
-            var euroCountries = ["DE", "FR", "CY", "AT", "EE", "LT", "IE", "SK", "FI", "PT", "GR", "ND", "ES", "IT", "BE", "MT", "LU", "LV", "AD"]
             var userDestination = document.getElementById('destination');
             var userBudget = document.getElementById('budget').value;
             var userCurrency = document.getElementById('user-currency').value;
@@ -38,11 +35,9 @@ var getCurrentConditions = (event) => {
             console.log(userCurrency);
             //specify Exchange API endpoint
             var countryCode = response.sys.country
-            if (countryCode = [euroCountries]) {
-                var destinationCurrency = "EUR"
-            }else if (countryCode == "AL") {
+            if (countryCode == "AL") {
                 var destinationCurrency = "ALL"
-            }else if  (countryCode == "GB") {
+            }else if (countryCode == "GB") {
                 var destinationCurrency = "GBP"
             }else if (countryCode == "AM") {
                 var destinationCurrency = "AMD"
@@ -88,9 +83,9 @@ var getCurrentConditions = (event) => {
                 var destinationCurrency = "TRY"  
             }else if (countryCode == "UA") {
                 var destinationCurrency = "UAH"    
-            }
+            }else var destinationCurrency = "EUR";
             console.log(destinationCurrency);
-                var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${destinationCurrency}&amount=${userBudget}`;
+                var requestUrl = `https://api.exchangerate.host/convert?&from=${userCurrency}&to=${destinationCurrency}&amount=${userBudget}`;
                 fetch(requestUrl)
                 .then(handleErrors)
                 .then((response) => {
