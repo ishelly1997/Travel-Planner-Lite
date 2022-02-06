@@ -33,11 +33,12 @@ var getCurrentConditions = (event) => {
             var userDestination = document.getElementById('destination');
             var userBudget = document.getElementById('budget').value;
             var userCurrency = document.getElementById('user-currency').value;
-            localStorage.setItem(userDestination,userBudget,userCurrency,);
-            console.log(response);
+            localStorage.setItem(userDestination,userBudget,userCurrency);
+            //console.log(response);
+            //console.log(userCurrency);
             //Call Exchange API endpoint convert
             var countryCode = response.sys.country
-            if (countryCode == [euroCountries]) {
+            if (countryCode = [euroCountries]) {
                 var destinationCurrency = "EUR"
             }else if (countryCode == "AL") {
                 var destinationCurrency = "ALL"
@@ -88,14 +89,14 @@ var getCurrentConditions = (event) => {
             }else if (countryCode == "UA") {
                 var destinationCurrency = "UAH"    
             }
+            //console.log(destinationCurrency);
             var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${destinationCurrency}`;
               fetch(requestUrl)
                 .then(function (response) {
             return response.json(); 
                 })
-                .then(response => {
-
-                }
+                .then(response => {}
+            )
       // Save city to local storage
         saveCity(city);
         $('#search-error').text("");
