@@ -219,20 +219,12 @@ var renderCities = () => {
                 currentCity=lastCity;
             }
             // Set button class to active for currentCity
-            if (city === currentCity) {
-                cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
-            } else {
-                cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
-            } 
+            
             // Append city to page
             $('#city-results').prepend(cityEl);
         }
         // Add a "clear" button to page if there is a cities list
-        if (localStorage.length>0){
-            $('#clear-storage').html($('<a id="clear-storage" href="#">clear</a>'));
-        } else {
-            $('#clear-storage').html('');
-        }
+        
     }
     
 }

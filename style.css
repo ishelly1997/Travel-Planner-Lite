@@ -1,13 +1,15 @@
 span {
     font-size: 400%;
     font-weight: bolder;
-    color: blue;
+    color: blue;   
 }
+
 #parameters{
     max-width: 800px;
     padding-top: 40px;
     padding-right: 60px;
 }
+
 #search-button {
-    position: absolute ;
+    position: relative;
 }
