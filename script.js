@@ -28,6 +28,8 @@ var getCurrentConditions = (event) => {
     })
     .then((response) => {
             //Variables
+            //array of all country codes that use the EURO
+            var euroCountries = ["DE", "FR", "CY", "AT", "EE", "LT", "IE", "SK", "FI", "PT", "GR", "ND", "ES", "IT", "BE", "MT", "LU", "LV", "AD"]
             var userDestination = document.getElementById('destination');
             var userBudget = document.getElementById('budget').value;
             var userCurrency = document.getElementById('user-currency').value;
@@ -35,8 +37,58 @@ var getCurrentConditions = (event) => {
             console.log(response);
             //Call Exchange API endpoint convert
             var countryCode = response.sys.country
-            
-            var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${countryCode}`;
+            if (countryCode == [euroCountries]) {
+                var destinationCurrency = "EUR"
+            }else if (countryCode == "AL") {
+                var destinationCurrency = "ALL"
+            }else if  (countryCode == "GB") {
+                var destinationCurrency = "GBP"
+            }else if (countryCode == "AM") {
+                var destinationCurrency = "AMD"
+            }else if (countryCode == "AZ") {
+                var destinationCurrency = "AZN"
+            }else if (countryCode == "BA") {
+                var destinationCurrency = "BAM"
+            }else if (countryCode == "BG") {
+                var destinationCurrency = "BGN"
+            }else if (countryCode == "BY") {
+                var destinationCurrency = "BYN"        
+            }else if (countryCode == "CH") {
+                var destinationCurrency = "CHF"  
+            }else if (countryCode == "CZ") {
+                var destinationCurrency = "CZK"  
+            }else if (countryCode == "DK") {
+                var destinationCurrency = "DKK"  
+            }else if (countryCode == "GE") {
+                var destinationCurrency = "GEL"  
+            }else if (countryCode == "HR") {
+                var destinationCurrency = "HRK"  
+            }else if (countryCode == "HU") {
+                var destinationCurrency = "HUF"  
+            }else if (countryCode == "IS") {
+                var destinationCurrency = "ISK"  
+            }else if (countryCode == "MD") {
+                var destinationCurrency = "MDL"  
+            }else if (countryCode == "MK") {
+                var destinationCurrency = "MKD"  
+            }else if (countryCode == "NO") {
+                var destinationCurrency = "NOK"  
+            }else if (countryCode == "PL") {
+                var destinationCurrency = "PLN"  
+            }else if (countryCode == "RO") {
+                var destinationCurrency = "RON"  
+            }else if (countryCode == "RS") {
+                var destinationCurrency = "RSD"  
+            }else if (countryCode == "RU") {
+                var destinationCurrency = "RUB"  
+            }else if (countryCode == "SE") {
+                var destinationCurrency = "SEK"
+            }else if (countryCode == "TR") {
+                var destinationCurrency = "TRY"  
+            }else if (countryCode == "UA") {
+                var destinationCurrency = "UAH"    
+            }
+            var requestUrl = `https://api.exchangerate.host/convert?from=${userCurrency}&to=${destinationCurrency}`;
               fetch(requestUrl)
                 .then(function (response) {
             return response.json(); 
