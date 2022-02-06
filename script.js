@@ -94,6 +94,9 @@ var getCurrentConditions = (event) => {
                 .then((response) => {
                     var conversionResult = response.result;
                     console.log(conversionResult);
+                    var conversionHTML = 
+                    `<h4>You'll have ${conversionResult} in ${destinationCurrency} for your trip to ${city}</h4>`
+                    $('#budget-conversion').html(conversionHTML);
                 }
             )
                 
