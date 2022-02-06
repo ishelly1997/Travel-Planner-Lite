@@ -83,7 +83,10 @@ var getCurrentConditions = (event) => {
                 var destinationCurrency = "TRY"  
             }else if (countryCode == "UA") {
                 var destinationCurrency = "UAH"    
-            }else var destinationCurrency = "EUR";
+            }else if (countryCode == "US") {
+                var destinationCurrency = "USD"
+            }
+            else var destinationCurrency = "EUR";
             console.log(destinationCurrency);
                 var requestUrl = `https://api.exchangerate.host/convert?&from=${userCurrency}&to=${destinationCurrency}&amount=${userBudget}`;
                 fetch(requestUrl)
