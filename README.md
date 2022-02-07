@@ -10,10 +10,8 @@ JavaScript<br>
 
 Website: URL
 
-<br>
 Repository: https://github.com/ishelly1997/Travel-Planner-Lite<br>
 
-<br>
 
 Screen Shot of Website<br>
 <img src="./assets/images/screenshot.png" alt="screenshot">
