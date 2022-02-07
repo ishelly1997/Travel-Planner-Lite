@@ -5,9 +5,14 @@ span {
 }
 
 #parameters{
-    max-width: 800px;
-    padding-top: 40px;
-    padding-right: 60px;
-    align-content: left;
+
+    align-content: center;
 }
 
+main, nav {
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+  }
+
+ 
