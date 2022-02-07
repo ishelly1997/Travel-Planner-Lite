@@ -69,24 +69,59 @@ var getCurrentConditions = (event) => {
                 var destinationCurrency = "MKD"  
             }else if (countryCode == "NO") {
                 var destinationCurrency = "NOK"  
-            }else if (countryCode == "PL") {
-                var destinationCurrency = "PLN"  
-            }else if (countryCode == "RO") {
-                var destinationCurrency = "RON"  
-            }else if (countryCode == "RS") {
-                var destinationCurrency = "RSD"  
-            }else if (countryCode == "RU") {
-                var destinationCurrency = "RUB"  
-            }else if (countryCode == "SE") {
-                var destinationCurrency = "SEK"
-            }else if (countryCode == "TR") {
-                var destinationCurrency = "TRY"  
-            }else if (countryCode == "UA") {
-                var destinationCurrency = "UAH"    
-            }else if (countryCode == "US") {
+            }else if (countryCode == "AN") {
+                var destinationCurrency = "ANG"  
+            }else if (countryCode == "AO") {
+                var destinationCurrency = "AOA"  
+            }else if (countryCode == "AR") {
+                var destinationCurrency = "ARS"  
+            }else if (countryCode == "CX") {
+                var destinationCurrency = "AUD"  
+            }else if (countryCode == "CC") {
+                var destinationCurrency = "AUD"
+            }else if (countryCode == "HM") {
+                var destinationCurrency = "AUD"  
+            }else if (countryCode == "KI") {
+                var destinationCurrency = "AUD"    
+            }else if (countryCode == "NR") {
+                var destinationCurrency = "AUD"
+            }else if (countryCode == "NF") {
+                var destinationCurrency = "AUD"
+            }else if (countryCode == "TV") {
+                var destinationCurrency = "AUD"
+            }else if (countryCode == "AW") {
+                var destinationCurrency = "AWG"
+            }else if (countryCode == "BB") {
+                var destinationCurrency = "BBD"
+            }else if (countryCode == "BD") {
+                var destinationCurrency = "BDT"
+            }else if (countryCode == "BH") {
+                var destinationCurrency = "BHD"  
+            }else if (countryCode == "BI") {
+                var destinationCurrency = "BIF"  
+            }else if (countryCode == "BM") {
+                var destinationCurrency = "BMD"  
+            }else if (countryCode == "BN") {
+                var destinationCurrency = "BND"  
+            }else if (countryCode == "BO") {
+                var destinationCurrency = "BOB"
+            }else if (countryCode == "BR") {
+                var destinationCurrency = "BRL"  
+            }else if (countryCode == "BS") {
+                var destinationCurrency = "BSD"    
+            }else if (countryCode == "BT") {
+                var destinationCurrency = "BTN"
+            }else if (countryCode == "BW") {
+                var destinationCurrency = "BWP"
+            }else if (countryCode == "DZ") {
+                var destinationCurrency = "DZD"
+            }else if (countryCode == "AF") {
+                var destinationCurrency = "AFN"
+            }else if (countryCode == "AS") {
                 var destinationCurrency = "USD"
-            }
-            else var destinationCurrency = "EUR";
+            }else if (countryCode == "AU") {
+                var destinationCurrency = "AUD"
+            }else var destinationCurrency = "EUR";
             console.log(destinationCurrency);
                 var requestUrl = `https://api.exchangerate.host/convert?&from=${userCurrency}&to=${destinationCurrency}&amount=${userBudget}`;
                 fetch(requestUrl)
